@@ -1,0 +1,20 @@
+{
+    "name": "vdhicts/tagcloud-builder",
+    "description": "Easily build a tagcloud from PHP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dick van der Heiden",
+            "email": "info@vdhicts.nl"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vdhicts\\TagCloudBuilder\\": "src/"
+        }
+    }
+}
