@@ -26,4 +26,11 @@ class ParserTest extends TestCase
         $this->assertTrue(in_array($tags[1]->getName(), $tagNames));
         $this->assertTrue(in_array($tags[2]->getName(), $tagNames));
     }
+
+    public function testParserWithInvalidSeparator()
+    {
+        $this->expectException(TagcloudBuilder\Exceptions\InvalidParserSeparatorException::class);
+
+        $parser = new TagcloudBuilder\Parser('php, javascript, mysql', '');
+    }
 }

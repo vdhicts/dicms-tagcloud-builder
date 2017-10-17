@@ -2,6 +2,7 @@
 
 namespace Vdhicts\TagcloudBuilder\Renderers;
 
+use Vdhicts\HtmlElement\HtmlElement;
 use Vdhicts\TagcloudBuilder\Contracts\Renderer;
 use Vdhicts\TagcloudBuilder\Tag;
 use Vdhicts\TagcloudBuilder\TagCollection;
@@ -38,7 +39,7 @@ class DefaultRenderer implements Renderer
     {
         $percentage = ($tag->getOccurrence() / $this->totalTagOccurrence) * 100;
 
-        return sprintf('tag-size-%d', floor($percentage) / 100);
+        return sprintf('tag-size-%d', floor($percentage / 10));
     }
 
     /**

@@ -56,11 +56,12 @@ class Parser
     /**
      * Stores the separator.
      * @param string $separator
+     * @throws Exceptions\InvalidParserSeparatorException
      */
     public function setSeparator(string $separator = ',')
     {
-        if (empty($separator)) {
-            $separator = ',';
+        if ($separator === '') {
+            throw new Exceptions\InvalidParserSeparatorException($separator);
         }
 
         $this->separator = $separator;

@@ -42,6 +42,10 @@ class ItemCollectionTest extends TestCase
 
         $this->assertSame(3, $tagCollection->count());
         $this->assertSame(3, count($tagCollection->getTags()));
+
+        $this->assertInstanceOf(Tag::class, $tagCollection->getTag('PHP'));
+        $this->assertSame('PHP', $tagCollection->getTag('PHP')->getName());
+        $this->assertNull($tagCollection->getTag('something'));
     }
 
     public function testTagCollectionStoring()
@@ -56,6 +60,25 @@ class ItemCollectionTest extends TestCase
         $this->assertSame(3, $tagCollection->count());
     }
 
+    public function testTagCollectionExpansion()
+    {
+        $phpTag = new TagcloudBuilder\Tag('PHP');
+        $javascriptTag = new TagcloudBuilder\Tag('JavaScript');
+        $mysqlTag = new TagcloudBuilder\Tag('MySQL');
+
+        $tagCollection = new TagcloudBuilder\TagCollection();
+        $tagCollection->addTag($phpTag);
+        $tagCollection->addTag($javascriptTag);
+        $tagCollection->addTag($javascriptTag);
+        $tagCollection->addTag($mysqlTag);
+        $tagCollection->addTag($mysqlTag);
+        $tagCollection->addTag($mysqlTag);
+
+        $this->assertSame(1, $tagCollection->getTag('PHP')->getOccurrence());
+        $this->assertSame(2, $tagCollection->getTag('JavaScript')->getOccurrence());
+        $this->assertSame(3, $tagCollection->getTag('MySQL')->getOccurrence());
+    }
+
     public function testTagCollectionSortingOnOccurrence()
     {
         $tagCollection = $this->getBaseTagCollection();
@@ -68,7 +91,9 @@ class ItemCollectionTest extends TestCase
             $tagCollection->getTags()
         );
 
-        $this->assertSame(['MySQL', 'JavaScript', 'PHP'], $tagNames);
+        $this->assertSame('MySQL', $tagNames[0]);
+        $this->assertSame('JavaScript', $tagNames[1]);
+        $this->assertSame('PHP', $tagNames[2]);
     }
 
     public function testTagCollectionSortingOnName()
@@ -83,7 +108,9 @@ class ItemCollectionTest extends TestCase
             $tagCollection->getTags()
         );
 
-        $this->assertSame(['JavaScript', 'MySQL', 'PHP'], $tagNames);
+        $this->assertSame('JavaScript', $tagNames[0]);
+        $this->assertSame('MySQL', $tagNames[1]);
+        $this->assertSame('PHP', $tagNames[2]);
     }
 
     public function testTagCollectionSortingShuffle()
@@ -91,14 +118,7 @@ class ItemCollectionTest extends TestCase
         $tagCollection = $this->getBaseTagCollection();
         $tagCollection->sort('shuffle');
 
-        $tagNames = array_map(
-            function (Tag $tag) {
-                return $tag->getName();
-            },
-            $tagCollection->getTags()
-        );
-
-        $this->assertNotSame(['PHP', 'JavaScript', 'MySQL'], $tagNames);
+        $this->assertSame(3, $tagCollection->count());
     }
 
     public function testTagCollectionInvalidSortOrder()
@@ -122,7 +142,8 @@ class ItemCollectionTest extends TestCase
         );
 
         $this->assertSame(2, count($tagNames));
-        $this->assertNotSame(['JavaScript', 'MySQL'], $tagNames);
+        $this->assertSame('JavaScript', $tagNames[0]);
+        $this->assertSame('MySQL', $tagNames[1]);
     }
 
     public function testTagCollectionLimit()
@@ -139,6 +160,26 @@ class ItemCollectionTest extends TestCase
         );
 
         $this->assertSame(2, count($tagNames));
-        $this->assertNotSame(['JavaScript', 'MySQL'], $tagNames);
+        $this->assertSame('JavaScript', $tagNames[0]);
+        $this->assertSame('MySQL', $tagNames[1]);
+    }
+
+    public function testTagCollectionWithoutLimit()
+    {
+        $tagCollection = $this->getBaseTagCollection();
+        $tagCollection->sort('name');
+        $tagCollection->limit(-1);
+
+        $tagNames = array_map(
+            function (Tag $tag) {
+                return $tag->getName();
+            },
+            $tagCollection->getTags()
+        );
+
+        $this->assertSame(3, count($tagNames));
+        $this->assertSame('JavaScript', $tagNames[0]);
+        $this->assertSame('MySQL', $tagNames[1]);
+        $this->assertSame('PHP', $tagNames[2]);
     }
 }

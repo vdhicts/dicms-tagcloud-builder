@@ -45,10 +45,15 @@ class TagCollection
      */
     public function addTag(Tag $tag): TagCollection
     {
-        // When the tag is already present in the collection, increase its occurence
+        // When the tag is already present in the collection, increase its occurrence
         if (array_key_exists($tag->getName(), $this->tags)) {
-            $currentTag = $this->tags[$tag->getName()];
-            $this->tags[$tag->getName()]->setAmount($currentTag + $tag->getOccurrence());
+            // Clone current tag because it might be the same tag en het occurrence would be changed in all references
+            $currentTag = clone $this->tags[$tag->getName()];
+            $currentTag->setOccurrence($currentTag->getOccurrence() + $tag->getOccurrence());
+
+            // Store cloned tag
+            $this->tags[$tag->getName()] = $currentTag;
+
             return $this;
         }
 
@@ -141,7 +146,7 @@ class TagCollection
 
         $tags = $this->getTags();
 
-        switch($sortOrder()) {
+        switch($sortOrder) {
             case 'name' :
                 usort($tags, function (Tag $tag, Tag $otherTag) {
                     return strcmp($tag->getName(), $otherTag->getName());
@@ -149,7 +154,7 @@ class TagCollection
                 break;
             case 'occurrence' :
                 usort($tags, function (Tag $tag, Tag $otherTag) {
-                    return $tag->getOccurrence() >= $otherTag->getOccurrence();
+                    return $tag->getOccurrence() <= $otherTag->getOccurrence();
                 });
                 break;
             case 'shuffle' :
