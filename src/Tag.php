@@ -1,8 +1,8 @@
 <?php
 
-namespace Vdhicts\TagCloudBuilder;
+namespace Vdhicts\TagcloudBuilder;
 
-use Vdhicts\TagCloudBuilder\Exceptions;
+use Vdhicts\TagcloudBuilder\Exceptions;
 
 class Tag
 {
@@ -20,19 +20,19 @@ class Tag
      * Holds the amount the tag occurred.
      * @var int
      */
-    private $amount = 1;
+    private $occurrence = 1;
 
     /**
      * Tag constructor.
      * @param string $name
      * @param string|null $target
-     * @param int $amount
+     * @param int $occurrence
      */
-    public function __construct(string $name, string $target = null, int $amount = 1)
+    public function __construct(string $name, string $target = null, int $occurrence = 1)
     {
         $this->setName($name);
         $this->setLink($target);
-        $this->setAmount($amount);
+        $this->setOccurrence($occurrence);
     }
 
     /**
@@ -50,7 +50,7 @@ class Tag
      */
     private function setName(string $name)
     {
-        $this->name = $name;
+        $this->name = trim($name);
     }
 
     /**
@@ -79,10 +79,7 @@ class Tag
     public function setLink(string $link = null)
     {
         if (! is_null($link) && ! filter_var($link, FILTER_VALIDATE_URL)) {
-            throw new Exceptions\InvalidLinkException(sprintf(
-                'Provided link "%s" should be a valid URL or null',
-                $link
-            ));
+            throw new Exceptions\InvalidLinkException($link);
         }
 
         $this->link = $link;
@@ -92,17 +89,17 @@ class Tag
      * Returns the amount the tag occurred.
      * @return int
      */
-    public function getAmount(): int
+    public function getOccurrence(): int
     {
-        return $this->amount;
+        return $this->occurrence;
     }
 
     /**
      * Stores the amount the tag occurred.
-     * @param int $amount
+     * @param int $occurrence
      */
-    public function setAmount(int $amount = 1)
+    public function setOccurrence(int $occurrence = 1)
     {
-        $this->amount = $amount;
+        $this->occurrence = $occurrence;
     }
 }

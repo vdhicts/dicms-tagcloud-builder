@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Vdhicts\TagCloudBuilder;
+use Vdhicts\TagcloudBuilder;
 
 class TagTest extends TestCase
 {
@@ -11,32 +11,32 @@ class TagTest extends TestCase
         $link = 'http://www.google.com';
         $amount = 5;
 
-        $item = new TagCloudBuilder\Tag($name, $link, $amount);
+        $item = new TagcloudBuilder\Tag($name, $link, $amount);
 
-        $this->assertInstanceOf(TagCloudBuilder\Tag::class, $item);
+        $this->assertInstanceOf(TagcloudBuilder\Tag::class, $item);
         $this->assertSame($name, $item->getName());
         $this->assertSame($link, $item->getLink());
         $this->assertTrue($item->hasLink());
-        $this->assertSame($amount, $item->getAmount());
+        $this->assertSame($amount, $item->getOccurrence());
     }
 
     public function testItemWithDefaults()
     {
         $name = 'Google';
 
-        $item = new TagCloudBuilder\Tag($name);
+        $item = new TagcloudBuilder\Tag($name);
 
-        $this->assertInstanceOf(TagCloudBuilder\Tag::class, $item);
+        $this->assertInstanceOf(TagcloudBuilder\Tag::class, $item);
         $this->assertSame($name, $item->getName());
         $this->assertNull($item->getLink());
         $this->assertFalse($item->hasLink());
-        $this->assertSame(1, $item->getAmount());
+        $this->assertSame(1, $item->getOccurrence());
     }
 
     public function testItemWithInvalidTarget()
     {
-        $this->expectException(TagCloudBuilder\Exceptions\InvalidLinkException::class);
+        $this->expectException(TagcloudBuilder\Exceptions\InvalidLinkException::class);
 
-        new TagCloudBuilder\Tag('test', 'test');
+        new TagcloudBuilder\Tag('test', 'test');
     }
 }

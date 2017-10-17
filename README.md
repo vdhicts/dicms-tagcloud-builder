@@ -1,8 +1,6 @@
-# Menu
+# Tagcloud
 
-This package allows you to easily build a hierarchical menu from PHP. It's inspired by 
-[Crisp's blogpost](https://crisp.tweakblogs.net/blog/317/formatting-a-multi-level-menu-using-only-one-query.html) but 
-further implemented.
+This package allows you to easily build a tagcloud from PHP.
 
 ## Requirements
 
@@ -15,38 +13,38 @@ This package can be used in any PHP project or with any framework.
 You can install the package via composer:
 
 ``` bash
-composer require vdhicts/menu-builder
+composer require vdhicts/tagcloud-builder
 ```
 
 ## Usage
 
 ```php
-use Vdhicts\MenuBuilder;
+use Vdhicts\TagcloudBuilder;
     
-$item = new MenuBuilder\Item(1, 'Search engines');
-$subItemGoogle = new MenuBuilder\Item(2, 'Google', 'http://www.google.com', $item->getId());
-$subItemBing = new MenuBuilder\Item(3, 'Bing', 'http://www.bing.com', $item->getId());
+$phpTag = new TagcloudBuilder\Tag('PHP');
+$javascriptTag = new TagcloudBuilder\Tag('JavaScript', 'http://www.example.com/javascript', 2);
+$mysqlTag = new TagcloudBuilder\Tag('MySQL', 'http://www.example.com/mysql', 5);
+
+$tagCollection = new TagcloudBuilder\TagCollection();
+$tagCollection->addTag($phpTag)
+    ->addTag($javascriptTag)
+    ->addTag($mysqlTag);
     
-$itemCollection = new MenuBuilder\ItemCollection();
-$itemCollection->addItem($item)
-    ->addItem($subItemGoogle)
-    ->addItem($subItemBing);
-    
-$renderer = new MenuBuilder\Renderers\Navbar();
-$menuBuilder = new MenuBuilder\Builder($itemCollection, $navbar);
-$menuBuilder->generate();
+$renderer = new TagcloudBuilder\Renderers\DefaultRenderer();
+$tagcloudBuilder = new TagcloudBuilder\Builder($tagCollection, $renderer);
+$tagcloudBuilder->generate();
 ```
 
 ### Renderers
 
-There are 3 renderers available by default:
+There is 1 renderer available by default:
 
-#### List group
+#### DefaultRendere
 
 Usefull for things like sidebars or sidemenu's. Renders the menu as a Bootstrap list-group component:
 
 ```html
-<ul class="list-group">
+<ul class="tagcloud">
     <li class="list-group-item">Search engines
         <ul class="list-group">
             <li class="list-group-item">

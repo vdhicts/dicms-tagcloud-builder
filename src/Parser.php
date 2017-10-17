@@ -1,6 +1,6 @@
 <?php
 
-namespace Vdhicts\TagCloudBuilder;
+namespace Vdhicts\TagcloudBuilder;
 
 class Parser
 {
@@ -79,8 +79,6 @@ class Parser
             explode($this->getSeparator(), $this->getTagString())
         );
 
-        $tagCollection = new TagCollection();
-        $tagCollection->setTags($tags);
-        return $tagCollection;
+        return new TagCollection($tags);
     }
 }

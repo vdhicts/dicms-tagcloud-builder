@@ -1,8 +1,8 @@
 <?php
 
-namespace Vdhicts\TagCloudBuilder\Contracts;
+namespace Vdhicts\TagcloudBuilder\Contracts;
 
-use Vdhicts\TagCloudBuilder\TagCollection;
+use Vdhicts\TagcloudBuilder\TagCollection;
 
 interface Renderer
 {
