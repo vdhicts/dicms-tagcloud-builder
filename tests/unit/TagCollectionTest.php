@@ -1,18 +1,17 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Vdhicts\TagcloudBuilder;
-use Vdhicts\TagcloudBuilder\Tag;
+use Vdhicts\Dicms\Tagcloud;
 
 class ItemCollectionTest extends TestCase
 {
     private function getBaseTagCollection()
     {
-        $phpTag = new TagcloudBuilder\Tag('PHP');
-        $javascriptTag = new TagcloudBuilder\Tag('JavaScript', 'http://www.example.com/javascript', 2);
-        $mysqlTag = new TagcloudBuilder\Tag('MySQL', 'http://www.example.com/mysql', 5);
+        $phpTag = new Tagcloud\Tag('PHP');
+        $javascriptTag = new Tagcloud\Tag('JavaScript', 'http://www.example.com/javascript', 2);
+        $mysqlTag = new Tagcloud\Tag('MySQL', 'http://www.example.com/mysql', 5);
 
-        $itemCollection = new TagcloudBuilder\TagCollection();
+        $itemCollection = new Tagcloud\TagCollection();
         $itemCollection->addTag($phpTag)
             ->addTag($javascriptTag)
             ->addTag($mysqlTag);
@@ -24,7 +23,7 @@ class ItemCollectionTest extends TestCase
     {
         $tagCollection = $this->getBaseTagCollection();
 
-        $this->assertInstanceOf(TagcloudBuilder\TagCollection::class, $tagCollection);
+        $this->assertInstanceOf(Tagcloud\TagCollection::class, $tagCollection);
     }
 
     public function testTagCollectionCheck()
@@ -32,7 +31,7 @@ class ItemCollectionTest extends TestCase
         $tagCollection = $this->getBaseTagCollection();
         $this->assertTrue($tagCollection->hasTags());
 
-        $emptyTagCollection = new TagcloudBuilder\TagCollection();
+        $emptyTagCollection = new Tagcloud\TagCollection();
         $this->assertFalse($emptyTagCollection->hasTags());
     }
 
@@ -43,18 +42,18 @@ class ItemCollectionTest extends TestCase
         $this->assertSame(3, $tagCollection->count());
         $this->assertSame(3, count($tagCollection->getTags()));
 
-        $this->assertInstanceOf(Tag::class, $tagCollection->getTag('PHP'));
+        $this->assertInstanceOf(Tagcloud\Tag::class, $tagCollection->getTag('PHP'));
         $this->assertSame('PHP', $tagCollection->getTag('PHP')->getName());
         $this->assertNull($tagCollection->getTag('something'));
     }
 
     public function testTagCollectionStoring()
     {
-        $phpTag = new TagcloudBuilder\Tag('PHP');
-        $javascriptTag = new TagcloudBuilder\Tag('JavaScript', 'http://www.example.com/javascript', 2);
-        $mysqlTag = new TagcloudBuilder\Tag('MySQL', 'http://www.example.com/mysql', 5);
+        $phpTag = new Tagcloud\Tag('PHP');
+        $javascriptTag = new Tagcloud\Tag('JavaScript', 'http://www.example.com/javascript', 2);
+        $mysqlTag = new Tagcloud\Tag('MySQL', 'http://www.example.com/mysql', 5);
 
-        $tagCollection = new TagcloudBuilder\TagCollection();
+        $tagCollection = new Tagcloud\TagCollection();
         $tagCollection->setTags([$phpTag, $javascriptTag, $mysqlTag]);
 
         $this->assertSame(3, $tagCollection->count());
@@ -62,11 +61,11 @@ class ItemCollectionTest extends TestCase
 
     public function testTagCollectionExpansion()
     {
-        $phpTag = new TagcloudBuilder\Tag('PHP');
-        $javascriptTag = new TagcloudBuilder\Tag('JavaScript');
-        $mysqlTag = new TagcloudBuilder\Tag('MySQL');
+        $phpTag = new Tagcloud\Tag('PHP');
+        $javascriptTag = new Tagcloud\Tag('JavaScript');
+        $mysqlTag = new Tagcloud\Tag('MySQL');
 
-        $tagCollection = new TagcloudBuilder\TagCollection();
+        $tagCollection = new Tagcloud\TagCollection();
         $tagCollection->addTag($phpTag);
         $tagCollection->addTag($javascriptTag);
         $tagCollection->addTag($javascriptTag);
@@ -85,7 +84,7 @@ class ItemCollectionTest extends TestCase
         $tagCollection->sort('occurrence');
 
         $tagNames = array_map(
-            function (Tag $tag) {
+            function (Tagcloud\Tag $tag) {
                 return $tag->getName();
             },
             $tagCollection->getTags()
@@ -102,7 +101,7 @@ class ItemCollectionTest extends TestCase
         $tagCollection->sort('name');
 
         $tagNames = array_map(
-            function (Tag $tag) {
+            function (Tagcloud\Tag $tag) {
                 return $tag->getName();
             },
             $tagCollection->getTags()
@@ -123,7 +122,7 @@ class ItemCollectionTest extends TestCase
 
     public function testTagCollectionInvalidSortOrder()
     {
-        $this->expectException(TagcloudBuilder\Exceptions\InvalidSortOrderException::class);
+        $this->expectException(Tagcloud\Exceptions\InvalidSortOrderException::class);
 
         $tagCollection = $this->getBaseTagCollection();
         $tagCollection->sort('something');
@@ -135,7 +134,7 @@ class ItemCollectionTest extends TestCase
         $tagCollection->removeTags(['PHP']);
 
         $tagNames = array_map(
-            function (Tag $tag) {
+            function (Tagcloud\Tag $tag) {
                 return $tag->getName();
             },
             $tagCollection->getTags()
@@ -153,7 +152,7 @@ class ItemCollectionTest extends TestCase
         $tagCollection->limit(2);
 
         $tagNames = array_map(
-            function (Tag $tag) {
+            function (Tagcloud\Tag $tag) {
                 return $tag->getName();
             },
             $tagCollection->getTags()
@@ -171,7 +170,7 @@ class ItemCollectionTest extends TestCase
         $tagCollection->limit(-1);
 
         $tagNames = array_map(
-            function (Tag $tag) {
+            function (Tagcloud\Tag $tag) {
                 return $tag->getName();
             },
             $tagCollection->getTags()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Vdhicts\TagcloudBuilder;
+namespace Vdhicts\Dicms\Tagcloud;
 
 class Parser
 {
@@ -19,6 +19,7 @@ class Parser
      * Parser constructor.
      * @param string $tagString
      * @param string $separator
+     * @throws Exceptions\InvalidParserSeparatorException
      */
     public function __construct(string $tagString, string $separator = ',')
     {

@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Vdhicts\TagcloudBuilder;
+use Vdhicts\Dicms\Tagcloud;
 
 class TagTest extends TestCase
 {
@@ -11,9 +11,9 @@ class TagTest extends TestCase
         $link = 'http://www.google.com';
         $amount = 5;
 
-        $item = new TagcloudBuilder\Tag($name, $link, $amount);
+        $item = new Tagcloud\Tag($name, $link, $amount);
 
-        $this->assertInstanceOf(TagcloudBuilder\Tag::class, $item);
+        $this->assertInstanceOf(Tagcloud\Tag::class, $item);
         $this->assertSame($name, $item->getName());
         $this->assertSame($link, $item->getLink());
         $this->assertTrue($item->hasLink());
@@ -24,9 +24,9 @@ class TagTest extends TestCase
     {
         $name = 'Google';
 
-        $item = new TagcloudBuilder\Tag($name);
+        $item = new Tagcloud\Tag($name);
 
-        $this->assertInstanceOf(TagcloudBuilder\Tag::class, $item);
+        $this->assertInstanceOf(Tagcloud\Tag::class, $item);
         $this->assertSame($name, $item->getName());
         $this->assertNull($item->getLink());
         $this->assertFalse($item->hasLink());
@@ -35,8 +35,8 @@ class TagTest extends TestCase
 
     public function testItemWithInvalidTarget()
     {
-        $this->expectException(TagcloudBuilder\Exceptions\InvalidLinkException::class);
+        $this->expectException(Tagcloud\Exceptions\InvalidLinkException::class);
 
-        new TagcloudBuilder\Tag('test', 'test');
+        new Tagcloud\Tag('test', 'test');
     }
 }

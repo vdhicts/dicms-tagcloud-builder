@@ -1,10 +1,10 @@
 <?php
 
-namespace Vdhicts\TagcloudBuilder\Exceptions;
+namespace Vdhicts\Dicms\Tagcloud\Exceptions;
 
 use Throwable;
 
-class InvalidSortOrderException extends TagcloudBuilderException
+class InvalidSortOrderException extends TagcloudException
 {
     /**
      * InvalidSortOrderException constructor.
