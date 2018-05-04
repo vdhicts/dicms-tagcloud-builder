@@ -19,19 +19,19 @@ composer require vdhicts/tagcloud-builder
 ## Usage
 
 ```php
-use Vdhicts\TagcloudBuilder;
+use Vdhicts\Dicms\Tagcloud;
     
-$phpTag = new TagcloudBuilder\Tag('PHP');
-$javascriptTag = new TagcloudBuilder\Tag('JavaScript', 'http://www.example.com/javascript', 2);
-$mysqlTag = new TagcloudBuilder\Tag('MySQL', 'http://www.example.com/mysql', 5);
+$phpTag = new Tagcloud\Tag('PHP');
+$javascriptTag = new Tagcloud\Tag('JavaScript', 'http://www.example.com/javascript', 2);
+$mysqlTag = new Tagcloud\Tag('MySQL', 'http://www.example.com/mysql', 5);
 
-$tagCollection = new TagcloudBuilder\TagCollection();
+$tagCollection = new Tagcloud\TagCollection();
 $tagCollection->addTag($phpTag)
     ->addTag($javascriptTag)
     ->addTag($mysqlTag);
     
-$renderer = new TagcloudBuilder\Renderers\DefaultRenderer();
-$tagcloudBuilder = new TagcloudBuilder\Builder($tagCollection, $renderer);
+$renderer = new Tagcloud\Renderers\DefaultRenderer();
+$tagcloudBuilder = new Tagcloud\Builder($tagCollection, $renderer);
 $tagcloudBuilder->generate();
 ```
 
