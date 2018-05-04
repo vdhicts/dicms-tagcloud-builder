@@ -1,10 +1,10 @@
 <?php
 
-namespace Vdhicts\TagcloudBuilder\Exceptions;
+namespace Vdhicts\Dicms\Tagcloud\Exceptions;
 
 use Throwable;
 
-class InvalidParserSeparatorException extends TagcloudBuilderException
+class InvalidParserSeparatorException extends TagcloudException
 {
     /**
      * InvalidParserSeparatorException constructor.

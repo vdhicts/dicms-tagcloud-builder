@@ -1,11 +1,11 @@
 <?php
 
-namespace Vdhicts\TagcloudBuilder\Renderers;
+namespace Vdhicts\Dicms\Tagcloud\Renderers;
 
-use Vdhicts\HtmlElement\HtmlElement;
-use Vdhicts\TagcloudBuilder\Contracts\Renderer;
-use Vdhicts\TagcloudBuilder\Tag;
-use Vdhicts\TagcloudBuilder\TagCollection;
+use Vdhicts\Dicms\Html;
+use Vdhicts\Dicms\Tagcloud\Contracts\Renderer;
+use Vdhicts\Dicms\Tagcloud\Tag;
+use Vdhicts\Dicms\Tagcloud\TagCollection;
 
 class DefaultRenderer implements Renderer
 {
@@ -45,11 +45,11 @@ class DefaultRenderer implements Renderer
     /**
      * Generates the tag cloud item.
      * @param Tag $tag
-     * @return HtmlElement
+     * @return Html\Element
      */
-    private function generateTagcloudItem(Tag $tag): HtmlElement
+    private function generateTagcloudItem(Tag $tag): Html\Element
     {
-        $tagcloudItemHtml = new HtmlElement('li');
+        $tagcloudItemHtml = new Html\Element('li');
         $tagcloudItemHtml->setAttribute('class', 'tag');
         $tagcloudItemHtml->addAttributeValue('class', $this->getTagcloudItemClass($tag));
         if (! $tag->hasLink()) {
@@ -57,7 +57,7 @@ class DefaultRenderer implements Renderer
             return $tagcloudItemHtml;
         }
 
-        $linkHtml = new HtmlElement('a', $tag->getName(), ['href' => $tag->getLink()]);
+        $linkHtml = new Html\Element('a', $tag->getName(), ['href' => $tag->getLink()]);
         $tagcloudItemHtml->inject($linkHtml);
 
         return $tagcloudItemHtml;
@@ -76,7 +76,7 @@ class DefaultRenderer implements Renderer
 
         $this->totalTagOccurrence = $this->calculateTotalTagOccurrence($tagCollection);
 
-        $tagcloudHtml = new HtmlElement('ul');
+        $tagcloudHtml = new Html\Element('ul');
         $tagcloudHtml->setAttribute('class', 'tagcloud');
         foreach ($tagCollection->getTags() as $tag) {
             $tagcloudHtml->inject($this->generateTagcloudItem($tag));

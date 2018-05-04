@@ -1,8 +1,8 @@
 <?php
 
-namespace Vdhicts\TagcloudBuilder;
+namespace Vdhicts\Dicms\Tagcloud;
 
-use Vdhicts\TagcloudBuilder\Exceptions;
+use Vdhicts\Dicms\Tagcloud\Exceptions;
 
 class Tag
 {
@@ -27,6 +27,7 @@ class Tag
      * @param string $name
      * @param string|null $target
      * @param int $occurrence
+     * @throws Exceptions\InvalidLinkException
      */
     public function __construct(string $name, string $target = null, int $occurrence = 1)
     {

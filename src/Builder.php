@@ -1,6 +1,6 @@
 <?php
 
-namespace Vdhicts\TagcloudBuilder;
+namespace Vdhicts\Dicms\Tagcloud;
 
 class Builder
 {

@@ -4,7 +4,7 @@ This package allows you to easily build a tagcloud from PHP.
 
 ## Requirements
 
-This package requires PHP 7 and the renderers make use of [vdhicts/htmlelement](https://github.com/vdhicts/html-element).
+This package requires PHP 7 and the renderers make use of [vdhicts/dicms-html-element](https://github.com/vdhicts/dicms-html-element).
 
 ## Installation
 
